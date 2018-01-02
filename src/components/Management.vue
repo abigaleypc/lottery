@@ -96,10 +96,14 @@ export default {
       this.memberList.splice(index, 1);
     },
     save: function() {
-      this.memberList.join(',');
-      debugger
+      this.memberList.join(",");
+      let _memberList = JSON.stringify(this.memberList);
+      localStorage.setItem("memberList", _memberList);
     },
-    deleteAll: function() {}
+    deleteAll: function() {
+      this.memberList = [];
+      localStorage.removeItem("memberList");
+    }
   }
 };
 </script>

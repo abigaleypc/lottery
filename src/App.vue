@@ -36,4 +36,8 @@ export default {
   width: 100%;
   height: 100%;
 }
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
 </style>

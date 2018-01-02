@@ -16,7 +16,7 @@ Vue.component('roll-item', {
     }
   },
   mounted: function () {
-    this.membersListStr = this.getGolbalList()
+    this.membersListStr = this.getGlobalList()
     this.init()
     // 滚动
     this.run()
@@ -86,7 +86,7 @@ Vue.component('roll-item', {
         this.imageList.push(`./src/assets/img${e}.jpg`)
       })
     },
-    getGolbalList: function () {
+    getGlobalList: function () {
       return localStorage.getItem('memberList')
     }
   }

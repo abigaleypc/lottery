@@ -20,16 +20,9 @@ export default {
   margin-top: 60px;
 }
 
-.container {
-  position: relative;
-}
 .image-list {
-  /* position: absolute;
-  width: 100px; */
-  /* height: 100px; */
-  /* overflow: hidden; */
-  /* transition: top .3s ease; */
-  /* top: 0px; */
+  position: relative;
+  width: 100px;
 }
 
 .image-item {

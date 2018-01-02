@@ -1,75 +1,93 @@
 import Vue from 'vue'
 Vue.component('roll-item', {
-  template: `<div>
-  <div class="container">
+  template: `
   <div class="image-list">
+  {{isStop}}
     <div v-for="item in imageList" v-bind:key="item.index" class="image-item">
       <img :src=item alt="">
     </div>
-    <button @click="changeStatus">changeStatus</button>
-  </div>
-  </div>
 </div>`,
   data() {
     return {
-      membersNum: [1, 2, 3, 4],
+      membersNum: [],
       imageList: [],
-      isStop: false,
-      roll: null
+      roll: null,
+      membersListStr: ''
     }
   },
   mounted: function () {
-    // 将数组打乱
-    this.membersNum.sort(this.randomsort);
-    // this.membersNum = this.membersNum.concat(this.membersNum)
-    this.renderImageList();
-
+    this.membersListStr = this.getGolbalList()
+    this.init()
     // 滚动
-    this.run();
+    this.run()
   },
+  props: ['isStop'],
   watch: {
     isStop: function (val) {
       if (val) {
-        this.stop();
+        this.stop()
       } else {
-        this.run();
+        this.run()
       }
+    },
+    membersListStr: function (val) {
+      // 当全局人员列表更新时，初始化数据
+      this.init()
     }
   },
   methods: {
+    init: function () {
+      this.membersNum = this.membersListStr.split(',')
+      // 将数组打乱
+      this.membersNum.sort(this.randomsort)
+      this.renderImageList()
+    },
     changeStatus: function () {
-      this.isStop = !this.isStop;
+      this.isStop = !this.isStop
     },
     stop: function (params) {
-      clearInterval(this.roll);
+      clearInterval(this.roll)
       if (this.isStop) {
-        let time = 0;
-        for (let i = 1; i <= 10; i++) {
+        let time = 0
+        let delay = 3 // 从回车到停下时持续时间
+        for (let i = 1; i <= delay; i++) {
           (i => {
-            time = i * 50 + time;
+            time = i * 50 + time
             setTimeout(() => {
-              let item = this.imageList.pop();
-              this.imageList.unshift(item);
-            }, time);
-          })(i);
+              let item = this.imageList.pop()
+              this.imageList.unshift(item)
+              this.membersListStr = localStorage.getItem('memberList')
+              if (i == delay) {
+                // 当停下时  更新localStorage中的人员列表 
+                let lastItemNum = this.imageList[this.imageList.length - 1].match(/\/img(.+)\./)[1]
+                let index = this.membersNum.indexOf(lastItemNum)
+                this.membersNum.splice(index, 1)
+                let _membersListStr = this.membersNum.join(',')
+                localStorage.setItem('memberList', _membersListStr)
+              }
+            }, time)
+          })(i)
         }
       }
     },
     run: function () {
       this.roll = setInterval(() => {
-        let item = this.imageList.pop();
-        this.imageList.unshift(item);
-      }, 100);
+        let item = this.imageList.pop()
+        this.imageList.unshift(item)
+      }, 100)
     },
     randomsort: function (a, b) {
-      //用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
-      return Math.random() > 0.5 ? -1 : 1;
+      // 用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
+      return Math.random() > 0.5 ? -1 : 1
     },
     renderImageList: function () {
-      this.imageList = [];
+      this.imageList = []
       this.membersNum.forEach(e => {
-        this.imageList.push(`./src/assets/img${e}.jpg`);
-      });
+        this.imageList.push(`./src/assets/img${e}.jpg`)
+      })
+    },
+    getGolbalList: function () {
+      return localStorage.getItem('memberList')
     }
   }
-});
+})

@@ -40,4 +40,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
+.name,.num {
+  background: white;
+}
 </style>

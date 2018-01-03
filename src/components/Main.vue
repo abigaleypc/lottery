@@ -19,7 +19,7 @@ export default {
     };
   },
   mounted: function() {
-    localStorage.setItem("memberList", "1,2,3,4");
+    localStorage.setItem("memberList_temp", "1,2,3,4");
   },
   watch: {},
   methods: {

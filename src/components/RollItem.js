@@ -1,10 +1,14 @@
 import Vue from 'vue'
+import { memberList } from '../data/data'
 Vue.component('roll-item', {
   template: `
   <div class="image-list">
   {{isStop}}
-    <div v-for="item in imageList" v-bind:key="item.index" class="image-item">
-      <img :src=item alt="">
+   
+    <div v-for="item in membersNum" class="image-item">
+    <img :src=getImgSrc(item) alt="">
+    <div class="name">{{originList[item].name}}</div>
+    <div class="num">{{item}}</div>
     </div>
 </div>`,
   data() {
@@ -12,7 +16,10 @@ Vue.component('roll-item', {
       membersNum: [],
       imageList: [],
       roll: null,
-      membersListStr: ''
+      membersListStr: '',
+      membersNum: [],
+      memberListObj: {},
+      originList: {}
     }
   },
   mounted: function () {
@@ -37,13 +44,16 @@ Vue.component('roll-item', {
   },
   methods: {
     init: function () {
-      this.membersNum = this.membersListStr.split(',')
-      // 将数组打乱
-      this.membersNum.sort(this.randomsort)
-      this.renderImageList()
-    },
-    changeStatus: function () {
-      this.isStop = !this.isStop
+      this.memberListObj = {}
+      this.membersNum = []
+      // 工号数组
+      let randomList = JSON.parse(this.membersListStr).sort(this.randomsort)
+      this.originList = memberList
+      // 整理数组格式
+      randomList.forEach(it => {
+        this.membersNum.push(it.num)
+        this.memberListObj[it.num] = it
+      })
     },
     stop: function (params) {
       clearInterval(this.roll)
@@ -54,16 +64,15 @@ Vue.component('roll-item', {
           (i => {
             time = i * 50 + time
             setTimeout(() => {
-              let item = this.imageList.pop()
-              this.imageList.unshift(item)
-              this.membersListStr = localStorage.getItem('memberList')
               if (i == delay) {
-                // 当停下时  更新localStorage中的人员列表 
-                let lastItemNum = this.imageList[this.imageList.length - 1].match(/\/img(.+)\./)[1]
-                let index = this.membersNum.indexOf(lastItemNum)
-                this.membersNum.splice(index, 1)
-                let _membersListStr = this.membersNum.join(',')
-                localStorage.setItem('memberList', _membersListStr)
+                let deleteItem = this.membersNum.pop()
+                this.updataMemberList(this.membersNum)
+                this.membersNum = [deleteItem]
+
+              }else {
+                let item = this.membersNum.pop()
+                this.membersNum.unshift(item)
+                this.membersListStr = this.getGlobalList()
               }
             }, time)
           })(i)
@@ -72,22 +81,29 @@ Vue.component('roll-item', {
     },
     run: function () {
       this.roll = setInterval(() => {
-        let item = this.imageList.pop()
-        this.imageList.unshift(item)
+        let newItem = this.membersNum.pop()
+        this.membersNum.unshift(newItem)
       }, 100)
     },
     randomsort: function (a, b) {
       // 用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
       return Math.random() > 0.5 ? -1 : 1
     },
-    renderImageList: function () {
-      this.imageList = []
-      this.membersNum.forEach(e => {
-        this.imageList.push(`./src/assets/img${e}.jpg`)
-      })
-    },
     getGlobalList: function () {
       return localStorage.getItem('memberList')
+    },
+    getImgSrc: function (num) {
+      return `./src/assets/${num}.jpg`
+    },
+    updataMemberList: function (newNumList) {
+      let newObjList = []
+      newNumList.forEach(it => {
+        newObjList.push(this.memberListObj[it])
+      })
+      if (newObjList.length == newNumList.length) {
+        localStorage.removeItem('memberList')
+        localStorage.setItem('memberList', JSON.stringify(newObjList))
+      }
     }
   }
 })

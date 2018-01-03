@@ -14,12 +14,11 @@
         <b-form-checkbox v-model="sign">CF员工</b-form-checkbox>
       </div>
       <div class="col-xs-2 col-md-2">
-        <b-button size="sm" variant="primary" @click="add" :disabled="disabled">添加</b-button>
+        <b-button size="" variant="primary" @click="add" :disabled="disabled">添加</b-button>
       </div>
-
-      <!-- <button @click="add" :disabled="disabled">添加</button> -->
     </div>
     <div class="title list-title">成员列表</div>
+    <div><b-button size="" variant="primary" @click="presave" class="pre-save">预设列表存入</b-button></div>
     <table aria-busy="false" aria-colcount="4" class="table b-table table-striped table-hover" id="__BVID__463_">
       <!---->
       <!---->
@@ -43,6 +42,7 @@
       </tbody>
     </table>
     <div class="btn-group">
+      <!-- <b-button size="" variant="primary" @click="addNum">添加工号</b-button> -->
       <b-button size="" variant="primary" @click="save">保存</b-button>
       <b-button size="" variant="" @click="deleteAll">整表删除</b-button>
     </div>
@@ -60,6 +60,10 @@ export default {
       sign: true,
       disabled: true
     };
+  },
+  mounted: function() {
+    if (localStorage.getItem("memberList"))
+      this.memberList = JSON.parse(localStorage.getItem("memberList"));
   },
   watch: {
     num: function(val) {
@@ -99,11 +103,31 @@ export default {
       this.memberList.join(",");
       let _memberList = JSON.stringify(this.memberList);
       localStorage.setItem("memberList", _memberList);
+      if (localStorage.getItem("memberList") == _memberList) {
+        alert("保存成功");
+      }
+
+      // let _numList = [];
+      // this.memberList.forEach(it => {
+      //   _numList.push(it);
+      // });
+      // localStorage.setItem("joinList", _numList);
     },
     deleteAll: function() {
       this.memberList = [];
       localStorage.removeItem("memberList");
-    }
+    },
+    presave: function() {
+      this.deleteAll();
+      let _memberList =
+        '[{"num":"009","name":"哇哈哈","sign":true},{"num":"003","name":"dede","sign":true},{"num":"001","name":"不过","sign":true},{"num":"004","name":"你倒是","sign":true},{"num":"002","name":"哇地所","sign":true},{"num":"006","name":"挖4 ","sign":true}]';
+      localStorage.setItem("memberList", _memberList);
+      this.memberList = JSON.parse(localStorage.getItem("memberList"));
+    },
+    // addNum: function() {
+    //   localStorage.removeItem('joinList')
+    //   localStorage.setItem("joinList", "001,002,003,004,006,009");
+    // }
   }
 };
 </script>
@@ -113,11 +137,19 @@ export default {
 }
 .title {
   text-align: left;
-  margin: 20px 0 10px;
+  margin: 60px 0 10px;
   font-size: 22px;
+}
+.list-title {
+  width: 200px;
+  float: left;
 }
 .btn-group {
   text-align: right;
   float: right;
+}
+.pre-save {
+  float: right;
+  margin-top: 50px;
 }
 </style>

@@ -42,15 +42,16 @@ Vue.component('roll-item', {
   },
   methods: {
     init: function () {
+      
+      // this.isStop = this.isStop ? true : false
       this.membersNum = []
       // 工号数组
       let randomList = JSON.parse(this.membersListStr).sort(this.randomsort)
       this.originList = this.getAllMemberList()
-      
+
       // 整理数组格式
       // let list  = this.getJoinMemberList()
       this.membersNum = randomList
-     
     },
     stop: function (params) {
       clearInterval(this.roll)
@@ -65,7 +66,6 @@ Vue.component('roll-item', {
                 let deleteItem = this.membersNum.pop()
                 this.updataMemberList(this.membersNum)
                 this.membersNum = [deleteItem]
-
               }else {
                 let item = this.membersNum.pop()
                 this.membersNum.unshift(item)
@@ -86,17 +86,17 @@ Vue.component('roll-item', {
       // 用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
       return Math.random() > 0.5 ? -1 : 1
     },
-    getAllMemberList:function () {
-      let list = JSON.parse(localStorage.getItem('memberList'));
-      let obj={}
+    getAllMemberList: function () {
+      let list = JSON.parse(localStorage.getItem('memberList'))
+      let obj = {}
       list.forEach(it => {
-        obj[it.num+""]=it
-      });
+        obj[it.num + ''] = it
+      })
 
       return obj
     },
-    getJoinMemberList:function (params) {
-      return localStorage.getItem('joinNumList');
+    getJoinMemberList: function (params) {
+      return localStorage.getItem('joinNumList')
     },
     getImgSrc: function (num) {
       return `./src/assets/${num}.jpg`

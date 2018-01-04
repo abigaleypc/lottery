@@ -20,9 +20,6 @@
       <div class="tip pull-left left row">{{tip}}</div>
 
       <div class="title row">成员列表</div>
-      <!-- <div>
-        <b-button size="" variant="primary" @click="presave">预设列表存入</b-button>
-      </div> -->
       <div class="row">
         <div v-for="item in joinNumList" :key="item.index" class="col-xs-2 col-md-2">
           {{item}} : {{getNameByNum(item)}} 
@@ -85,6 +82,7 @@
   </div>
 </template>
 <script>
+import { memberList, memberNumList } from "../data/data";
 export default {
   name: "Management",
   data() {
@@ -97,10 +95,12 @@ export default {
       joinNumList: [],
       joinNum: "",
       tip: "",
-      isEdit:false
+      isEdit: false
     };
   },
   mounted: function() {
+    // localStorage.setItem("total", "5,5,5,1");
+
     if (localStorage.getItem("memberList")) {
       let list = JSON.parse(localStorage.getItem("memberList"));
       list.sort(function(a, b) {
@@ -153,15 +153,15 @@ export default {
         sign: this.sign
       });
       this.init();
-      this.save()
+      this.save();
     },
     deleteItem: function(item) {
       let index = this.memberList.indexOf(item);
       this.memberList.splice(index, 1);
-      this.save()
+      this.save();
     },
     save: function() {
-      localStorage.removeItem('memberList')
+      localStorage.removeItem("memberList");
       this.memberList.join(",");
       let _memberList = JSON.stringify(this.memberList);
       localStorage.setItem("memberList", _memberList);
@@ -172,10 +172,12 @@ export default {
     },
     presave: function() {
       this.deleteAll();
-      let _memberList =
-        '[{"num":"009","name":"哇哈哈","sign":true},{"num":"003","name":"dede","sign":true},{"num":"001","name":"不过","sign":true},{"num":"004","name":"你倒是","sign":true},{"num":"002","name":"哇地所","sign":true},{"num":"006","name":"挖4 ","sign":true}]';
-      localStorage.setItem("memberList", _memberList);
+      localStorage.setItem("memberList", JSON.stringify(memberList));
       this.memberList = JSON.parse(localStorage.getItem("memberList"));
+
+      localStorage.removeItem("joinNumList");
+      localStorage.setItem("joinNumList", JSON.stringify(memberNumList));
+      this.memberNumList = JSON.parse(localStorage.getItem("joinNumList"));
     },
     addJoinNum: function() {
       this.tip = "";
@@ -192,7 +194,7 @@ export default {
         } else {
           this.joinNumList.push(this.joinNum);
           this.joinNum = null;
-          this.saveJoinNumList()
+          this.saveJoinNumList();
         }
       }
     },
@@ -205,9 +207,9 @@ export default {
       }
     },
     saveJoinNumList: function() {
-      localStorage.removeItem('joinNumList')
+      localStorage.removeItem("joinNumList");
       this.joinNumList.join(",");
-      let _joinNumList = JSON.stringify(this.joinNumList);
+      let _joinNumList = JSON.stringify(this.memberNumList);
       localStorage.setItem("joinNumList", _joinNumList);
     },
     deleteJoinNumAll: function() {
@@ -217,14 +219,13 @@ export default {
     deleteJoinItem: function(item) {
       let index = this.joinNumList.indexOf(item);
       this.joinNumList.splice(index, 1);
-      this.saveJoinNumList()
+      this.saveJoinNumList();
     },
-    editJoinNumList:function(){
-      this.isEdit = !this.isEdit
-      if(this.isEdit){
-        this.saveJoinNumList()
+    editJoinNumList: function() {
+      this.isEdit = !this.isEdit;
+      if (this.isEdit) {
+        this.saveJoinNumList();
       }
-      
     }
   }
 };

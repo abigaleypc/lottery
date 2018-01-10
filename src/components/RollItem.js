@@ -22,7 +22,7 @@ Vue.component('roll-item', {
   },
   mounted: function () {
     this.membersListStr = this.getJoinMemberList()
-    this.init()
+    // this.init()
     // 滚动
     this.run()
   },
@@ -67,6 +67,10 @@ Vue.component('roll-item', {
                 this.updataMemberList(this.membersNum)
                 this.membersNum = [deleteItem]
               }else {
+                if(this.props=='fjj')
+                console.log('------------------------------------');
+                console.log("??");
+                console.log('------------------------------------');
                 let item = this.membersNum.pop()
                 this.membersNum.unshift(item)
                 this.membersListStr = this.getJoinMemberList()

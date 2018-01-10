@@ -2,157 +2,157 @@ export const memberList = [
   {
     'num': '001',
     'name': '不过',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '004',
     'name': '你倒是',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '002',
     'name': '哇地所',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '003',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '004',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '005',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '006',
     'name': '你倒是',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '007',
     'name': '哇地所',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '008',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '009',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '010',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '011',
     'name': '你倒是',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '012',
     'name': '哇地所',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '013',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '014',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '015',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '016',
     'name': '你倒是',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '017',
     'name': '哇地所',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '018',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '019',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '020',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '021',
     'name': '你倒是',
-    'sign': true
+    'company': 'fjj'
   },
   {
     'num': '022',
     'name': '哇地所',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '023',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '024',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'jy'
   },
   {
     'num': '025',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '026',
     'name': '你倒是',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '027',
     'name': '哇地所',
-    'sign': true
+    'company': 'jy'
   },
   {
     'num': '028',
     'name': 'dede',
-    'sign': true
+    'company': 'cf'
   },
   {
     'num': '029',
     'name': '哇哈哈',
-    'sign': true
+    'company': 'jy'
   },
   {
     'num': '030',
     'name': '挖4 ',
-    'sign': true
+    'company': 'cf'
   }
 ]
 

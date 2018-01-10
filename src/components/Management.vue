@@ -40,7 +40,9 @@
           </b-form-input>
         </div>
         <div class="col-xs-2 col-md-2">
-          <b-form-checkbox v-model="sign">CF员工</b-form-checkbox>
+          <b-form-select v-model="company" :options="options" class="mb-3">
+          </b-form-select>
+          <!-- <b-form-checkbox v-model="company">所属公司</b-form-checkbox> -->
         </div>
         <div class="col-xs-2 col-md-2">
           <b-button size="" variant="primary" @click="add" :disabled="disabled">添加</b-button>
@@ -57,7 +59,7 @@
           <tr>
             <th aria-colindex="1" class="">工号</th>
             <th aria-colindex="2" class="">姓名</th>
-            <th aria-colindex="3" class="">是否CF员工</th>
+            <th aria-colindex="3" class="">所属公司</th>
             <th aria-colindex="4" class="">操作</th>
           </tr>
         </thead>
@@ -67,7 +69,7 @@
           <tr class="" v-for="item in memberList" :key="item.index">
             <td aria-colindex="1" class="">{{item.num}}</td>
             <td aria-colindex="2" class="">{{item.name}}</td>
-            <td aria-colindex="3" class="">{{item.sign?'CF员工':'非CF员工'}}</td>
+            <td aria-colindex="3" class="">{{getCompany(item.company)}}</td>
             <td aria-colindex="4" class="">
               <b-button size="sm" variant="danger" @click="deleteItem(item)">删除</b-button>
             </td>
@@ -90,12 +92,17 @@ export default {
       memberList: [],
       num: null,
       name: null,
-      sign: true,
       disabled: true,
       joinNumList: [],
       joinNum: "",
       tip: "",
-      isEdit: false
+      isEdit: false,
+      company: "cf",
+      options: [
+        { value: "cf", text: "CF" },
+        { value: "fjj", text: "富金机" },
+        { value: "jy", text: "巨忆" }
+      ]
     };
   },
   mounted: function() {
@@ -144,13 +151,13 @@ export default {
     init: function() {
       this.num = null;
       this.name = null;
-      this.sign = true;
+      this.company = "cf";
     },
     add: function() {
       this.memberList.push({
         num: this.num,
         name: this.name,
-        sign: this.sign
+        company: this.company
       });
       this.init();
       this.save();
@@ -226,6 +233,9 @@ export default {
       if (this.isEdit) {
         this.saveJoinNumList();
       }
+    },
+    getCompany: function(str) {
+      return this.options.filter(it => it.value == str)[0].text;
     }
   }
 };

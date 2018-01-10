@@ -1,8 +1,9 @@
 <template>
 <div>
   <div class="roll-item">
-    <roll-item :isStop='isStopArr[item]' v-for="item in tempList" :key="item.index">{{isStopArr[item]}}</roll-item>
+    <roll-item :isStop='isStopArr[item]' v-for="(item,index) in tempList" :key="item.index" :sign='signIndex==index?"fjj":"cf"'>{{isStopArr[item]}}</roll-item>
   </div>
+  <div v-for="item in tempList" :key="item.index">{{current}} : {{item}}</div>
  <button @click="enter">{{isStop?'跑起来':'停下'}}</button>
   </div>
 </template>
@@ -10,16 +11,17 @@
 export default {
   data() {
     return {
-      membersNum: [1, 2, 3, 4],
       tempList: [],
       isStopArr: [],
       index: -1,
       current: "third",
       rankKey: [],
-      isStop: false
+      isStop: false,
+      signIndex: 0
     };
   },
   mounted: function() {
+    localStorage.removeItem("rank");
     let tempList = {
       first: [1],
       second: [5],
@@ -38,6 +40,7 @@ export default {
   watch: {},
   methods: {
     init: function() {
+      this.$set(this, "tempList", []);
       this.tempList = [];
       this.isStopArr = [];
       this.membersListLen = this.rankList[this.current].shift();
@@ -45,25 +48,35 @@ export default {
       for (let i = 0; i < this.membersListLen; i++) {
         this.tempList.push(i);
       }
+
+      // 是否需要包含fjj jy
+      if (!localStorage.getItem("fjjSign")) {
+        localStorage.setItem("fjjSign", true);
+        this.signIndex = Math.floor(Math.random() * 5);
+      }
     },
     enter: function() {
       this.isStop = !this.isStop;
       if (this.isStop) {
-        let timer = setInterval(() => {
-          ++this.index;
-          this.isStopArr.push(true);
-          if (this.index >= this.membersListLen) {
-            clearInterval(timer);
-          }
-        }, 1000);
+        this.stop();
       } else {
-        this.getNext();
-        this.init();
+        this.run();
       }
     },
-    getNext: function() {
-      // this.rankKey
-
+    run: function() {
+      this.changeCurrentKey();
+      this.init();
+    },
+    stop: function() {
+      let timer = setInterval(() => {
+        ++this.index;
+        this.isStopArr.push(true);
+        if (this.index >= this.membersListLen) {
+          clearInterval(timer);
+        }
+      }, 1000);
+    },
+    changeCurrentKey: function() {
       let len = this.rankList[this.current].length;
       if (len > 0) {
         return;

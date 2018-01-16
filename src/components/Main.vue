@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="roll-item">
-    <roll-item :isStop='isStopArr[item]' v-for="(item,index) in tempList" :key="item.index" :sign='signIndex==index?"fjj":"cf"'>{{isStopArr[item]}}</roll-item>
+    <roll-item :isStop='isStopArr[item]' v-for="(item,index) in tempList" :key="item.index" >{{isStopArr[item]}}</roll-item>
   </div>
   <div v-for="item in tempList" :key="item.index">{{current}} : {{item}}</div>
  <button @click="enter">{{isStop?'跑起来':'停下'}}</button>
@@ -16,8 +16,7 @@ export default {
       index: -1,
       current: "third",
       rankKey: [],
-      isStop: false,
-      signIndex: 0
+      isStop: false
     };
   },
   mounted: function() {
@@ -48,12 +47,6 @@ export default {
       this.index = -1;
       for (let i = 0; i < this.membersListLen; i++) {
         this.tempList.push(i);
-      }
-
-      // 是否需要包含fjj jy
-      if (!localStorage.getItem("fjjSign")) {
-        localStorage.setItem("fjjSign", true);
-        this.signIndex = Math.floor(Math.random() * 5);
       }
     },
     enter: function() {

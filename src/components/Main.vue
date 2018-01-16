@@ -45,6 +45,7 @@ export default {
       this.isStopArr = [];
       this.membersListLen = this.rankList[this.current].shift();
       this.rankList;
+      this.index = -1;
       for (let i = 0; i < this.membersListLen; i++) {
         this.tempList.push(i);
       }

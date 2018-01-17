@@ -1,10 +1,10 @@
 <template>
-<div>
-  <div class="roll-item">
-    <roll-item :isStop='isStopArr[item]' v-for="(item,index) in tempList" :key="item.index" :sign='signIndex==index?"fjj":"cf"'>{{isStopArr[item]}}</roll-item>
-  </div>
-  <div v-for="item in tempList" :key="item.index">{{current}} : {{item}}</div>
- <button @click="enter">{{isStop?'跑起来':'停下'}}</button>
+  <div class="bg">
+    <div class="roll-item">
+      <roll-item :isStop='isStopArr[item]' v-for="(item,index) in tempList" :key="item.index" :sign='signIndex==index?"fjj":"cf"'>{{isStopArr[item]}}</roll-item>
+    </div>
+    <div v-for="item in tempList" :key="item.index">{{current}} : {{item}}</div>
+    <button @click="enter">{{isStop?'跑起来':'停下'}}</button>
   </div>
 </template>
 <script>
@@ -91,9 +91,16 @@ export default {
 </script>
 
 <style scoped>
+.bg {
+  width:1440px;
+  height:507px;
+  background:url('../assets/sources/bg.jpg')
+}
 .roll-item {
   /* width: 100px; */
   display: flex;
+  justify-content: center;
   flex-direction: row;
+  padding-top: 185px;
 }
 </style>

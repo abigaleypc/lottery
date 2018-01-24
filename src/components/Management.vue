@@ -1,6 +1,16 @@
 <template>
   <div>
     <div class="container">
+
+    <div>
+      <b-button size="" variant="primary" @click="cleanSign">清除其他公司标记</b-button>
+    </div>
+
+    <div>
+      <b-button size="" variant="primary" @click="resetPlayGameMember">重置参与游戏人员</b-button>
+    </div>
+    <hr />
+
       <div class="title">参与人员工号</div>
       <div class="form row">
         <div class="col-xs-6 col-md-6">
@@ -184,7 +194,19 @@ export default {
 
       localStorage.removeItem("joinNumList");
       localStorage.setItem("joinNumList", JSON.stringify(memberNumList));
+
+      localStorage.removeItem("playGame");
+      localStorage.setItem("playGame", JSON.stringify(memberNumList));
+
       this.memberNumList = JSON.parse(localStorage.getItem("joinNumList"));
+    },
+    resetPlayGameMember:function(){
+     
+      localStorage.removeItem("playGame");
+      localStorage.setItem("playGame", JSON.stringify(memberNumList));
+      if(localStorage.getItem("playGame")==JSON.stringify(memberNumList)){
+        alert('重置成功')
+      }
     },
     addJoinNum: function() {
       this.tip = "";
@@ -236,6 +258,10 @@ export default {
     },
     getCompany: function(str) {
       return this.options.filter(it => it.value == str)[0].text;
+    },
+    cleanSign: function() {
+      localStorage.removeItem("fjjSign");
+      localStorage.removeItem("jySign");
     }
   }
 };

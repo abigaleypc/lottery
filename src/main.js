@@ -6,6 +6,7 @@ import Management from './components/Management'
 import router from './router'
 
 import './components/RollItem.js'
+import './components/GameItem.js'
 import BootstrapVue from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
